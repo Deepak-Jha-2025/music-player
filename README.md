@@ -25,7 +25,7 @@ Features
 Demo
 ----
 
-[Link to live demo](#) _(Replace with your actual demo URL)_
+[Link to live demo](#) _(https://deepak-jha-2025.github.io/music-player/)_
 
 Installation
 ------------
