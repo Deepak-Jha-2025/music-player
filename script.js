@@ -271,6 +271,10 @@ const filterSongs = () => {
     if(!found) {
         playlistSongs.innerHTML = '<li class="not-found">No songs found</li>';
     }
+
+    if(!query) {
+        renderSongs(userData?.songs);
+    }
 }
 
 const setPlayButtonAccessibleText = () => {
