@@ -1,6 +1,7 @@
 const playlistSongs = document.getElementById("playlist-songs");
-const playButton = document.getElementById("play");
-const pauseButton = document.getElementById("pause");
+const playPauseButton = document.getElementById("playPause");
+const playIcon = document.querySelector(".icon-play");
+const pauseIcon = document.querySelector(".icon-pause");
 const nextButton = document.getElementById("next");
 const previousButton = document.getElementById("previous");
 const shuffleButton = document.getElementById("shuffle");
@@ -96,7 +97,9 @@ const playSong = (id) => {
         audio.currentTime = userData?.songCurrentTime;
     }
     userData.currentSong = song;
-    playButton.classList.add("playing");
+    playPauseButton.classList.add("playing");
+    playIcon.style.display = "none";
+    pauseIcon.style.display = "inline";
 
     highlightCurrentSong();
     setPlayerDisplay();
@@ -107,7 +110,9 @@ const playSong = (id) => {
 const pauseSong = () => {
     userData.songCurrentTime = audio.currentTime;
 
-    playButton.classList.remove("playing");
+    playPauseButton.classList.remove("playing");
+    playIcon.style.display = "inline";
+    pauseIcon.style.display = "none";
     audio.pause();
 };
 
@@ -157,7 +162,7 @@ const deleteSong = (id) => {
     highlightCurrentSong();
     setPlayButtonAccessibleText();
 
-    if (userData?.songs.length === 0) {
+    if (userData?.songs.length < allSongs.length) {
         const resetButton = document.createElement("button");
         const resetText = document.createTextNode("Reset Playlist");
 
@@ -226,7 +231,7 @@ const renderSongs = (array) => {
 const setPlayButtonAccessibleText = () => {
     const song = userData?.currentSong || userData?.songs[0];
 
-    playButton.setAttribute(
+    playPauseButton.setAttribute(
         "aria-label",
         song?.title ? `Play ${song.title}` : "Play"
     );
@@ -234,15 +239,13 @@ const setPlayButtonAccessibleText = () => {
 
 const getCurrentSongIndex = () => userData?.songs.indexOf(userData?.currentSong);
 
-playButton.addEventListener("click", () => {
-    if (userData?.currentSong === null) {
-        playSong(userData?.songs[0].id);
+playPauseButton.addEventListener("click", () => {
+    if (audio.paused) {
+        playSong(userData?.currentSong?.id || userData?.songs[0].id);
     } else {
-        playSong(userData?.currentSong.id);
+        pauseSong();
     }
 });
-
-pauseButton.addEventListener("click", pauseSong);
 
 nextButton.addEventListener("click", playNextSong);
 
