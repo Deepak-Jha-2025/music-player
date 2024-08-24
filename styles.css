@@ -12,8 +12,8 @@
     font-size: var(--root-font-size);
 
     /* font-families */
-    --font-headline: "Roboto Mono", monospace;
-    --font-family: "Lato", sans-serif;
+    --font-headline: "Montserrat", sans-serif;
+    --font-family: "Open Sans", sans-serif;
 }
 
 *,
@@ -155,6 +155,35 @@ ul {
 
 .volume-container {
     padding: 1px 6px 1px 6px;
+    position: relative; /* Ensure proper positioning of the slider */
+    display: inline-block;
+}
+
+/* Volume icon */
+.volume-icon {
+    cursor: pointer; /* Indicate that the icon is interactive */
+}
+
+/* Initially hide the slider */
+.volume-container input[type="range"] {
+    display: none; /* Hide the slider by default */
+    position: absolute;
+    bottom: 50%; /* Position it above the icon */
+    left: 45%; /* Center it horizontally */
+    transform: translateX(-50%); /* Center horizontally */
+    opacity: 0; /* Start with hidden slider */
+    width: 5px; /* Set width for vertical appearance */
+    height: 100px; /* Set height for the slider */
+    -webkit-appearance: slider-vertical; /* Ensure vertical appearance in WebKit browsers */
+    appearance: slider-vertical; /* Standard appearance for vertical slider */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Show the slider on hover */
+.volume-container:hover input[type="range"] {
+    display: block; /* Ensure the slider is displayed */
+    opacity: 1; /* Make it visible */
+    transform: translateX(-50%) translateY(-10px); /* Adjust vertical position */
 }
 
 button {
@@ -179,6 +208,13 @@ button:focus,
 .playlist-song:focus {
     /* outline-style: dashed; */
     outline-width: 2px;
+}
+
+#search-bar {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 /* Playlist */
