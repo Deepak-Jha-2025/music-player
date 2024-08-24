@@ -249,31 +249,22 @@ const renderSongs = (array) => {
 
 // Function to filter playlist items based on search input
 const filterSongs = () => {
-    const query = searchBar.value.toLowerCase();
+    const query = searchBar.value.trim().toLowerCase();
 
-    // Get all playlist items
-    const items = playlistSongs.querySelectorAll('.playlist-song');
-    let found = false;
-
-    items.forEach(item => {
-        const title = item.querySelector('.playlist-song-title').textContent.toLowerCase();
-
-        // Show or hide items based on search query
-        if (title.includes(query)) {
-            item.style.display = 'flex'; // Show the item
-            found = true;
-        } else {
-            item.style.display = 'none'; // Hide the item
-        }
-    })
-
-    // Show "not found" message if no songs match the query
-    if(!found) {
-        playlistSongs.innerHTML = '<li class="not-found">No songs found</li>';
+    if (!query) {
+        // Reset to the original playlist if search bar is cleared
+        renderSongs(userData?.songs);
+        return;
     }
 
-    if(!query) {
-        renderSongs(userData?.songs);
+    const filteredSongs = userData?.songs.filter (song => {
+        return song.title.toLowerCase().includes(query);
+    })
+
+    if (filteredSongs.length > 0) {
+        renderSongs(filteredSongs);
+    } else {
+        playlistSongs.innerHTML = '<li class="not-found">No songs found</li>';
     }
 }
 
