@@ -253,6 +253,7 @@ const filterSongs = () => {
 
     // Get all playlist items
     const items = playlistSongs.querySelectorAll('.playlist-song');
+    let found = false;
 
     items.forEach(item => {
         const title = item.querySelector('.playlist-song-title').textContent.toLowerCase();
@@ -260,10 +261,16 @@ const filterSongs = () => {
         // Show or hide items based on search query
         if (title.includes(query)) {
             item.style.display = 'flex'; // Show the item
+            found = true;
         } else {
             item.style.display = 'none'; // Hide the item
         }
     })
+
+    // Show "not found" message if no songs match the query
+    if(!found) {
+        playlistSongs.innerHTML = '<li class="not-found">No songs found</li>';
+    }
 }
 
 const setPlayButtonAccessibleText = () => {
